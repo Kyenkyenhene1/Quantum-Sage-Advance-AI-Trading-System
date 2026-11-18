@@ -1,0 +1,93 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 100% 98%; /* Light Desaturated Blue */
+    --foreground: 224 71.4% 4.1%;
+    --card: 210 100% 98%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 210 100% 98%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 207 90% 54%; /* Vibrant Blue */
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 224 71.4% 4.1%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 35 100% 65%; /* Contrasting Orange */
+    --accent-foreground: 224 71.4% 4.1%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 207 90% 54%;
+    --radius: 0.5rem;
+
+    /* Custom Semantic Colors */
+    --profit: 142.1 76.2% 36.3%; /* Bright Green */
+    --loss: 0 84.2% 60.2%; /* Bright Red */
+  }
+
+  .dark {
+    --background: 216 34% 17%; /* Darker Blue-Gray */
+    --foreground: 210 20% 98%;
+    --card: 216 34% 22%; /* Slightly Lighter Card */
+    --card-foreground: 210 20% 98%;
+    --popover: 216 34% 17%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 207 90% 54%; /* Vibrant Blue */
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 28% 25%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 28% 25%;
+    --muted-foreground: 215 16% 57%;
+    --accent: 35 100% 65%; /* Contrasting Orange */
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 63% 40%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 28% 25%;
+    --input: 215 28% 25%;
+    --ring: 207 90% 54%;
+    --radius: 0.5rem;
+    
+    /* Custom Semantic Colors */
+    --profit: 142.1 76.2% 36.3%; /* Bright Green */
+    --loss: 0 72% 51%; /* Brighter Red for dark mode */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.text-profit {
+    color: hsl(var(--profit));
+}
+
+.bg-profit {
+    background-color: hsl(var(--profit));
+}
+
+.border-profit {
+    border-color: hsl(var(--profit));
+}
+
+.text-loss {
+    color: hsl(var(--loss));
+}
+
+.bg-loss {
+    background-color: hsl(var(--loss));
+}
+
+.border-loss {
+    border-color: hsl(var(--loss));
+}

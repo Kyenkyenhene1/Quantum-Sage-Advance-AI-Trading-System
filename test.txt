@@ -1,0 +1,11 @@
+to install node package
+    - run installer
+
+- node -v 25.01, check version
+
+- install packages
+    npm install i (looks for package.json and installs everything)
+
+- run server
+    npm run dev 
+    npm run

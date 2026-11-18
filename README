@@ -1,0 +1,50 @@
+
+# Firebase Studio
+
+This is a NextJS starter in Firebase Studio.
+
+To get started, take a look at src/app/page.tsx.
+
+## Developer notes
+
+- CI: A GitHub Actions workflow is added at `.github/workflows/ci.yml` which runs `npm ci`, `npm run lint`, `npm run typecheck`, and `npm run build` on pushes and PRs to `main`/`master`.
+- Linting/Formatting: `.eslintrc.json` and `.prettierrc` were added. Install dev deps locally and run `npm run lint`.
+- Sentry: A small helper is available at `src/lib/sentry.ts`. Set `NEXT_PUBLIC_SENTRY_DSN` in your environment to enable.
+- Fixed: renamed/fixed UI checkbox component (`src/components/ui/checkbox.tsx`) and left a compatibility re-export at `ckeckbox.tsx`.
+
+## Performance / Bundle Analysis
+
+- To analyze the client bundle, install `@next/bundle-analyzer` and `cross-env` then run:
+
+```powershell
+npm install --save-dev @next/bundle-analyzer cross-env
+npm run analyze
+```
+
+- I've added lazy-loading wrappers for heavy dashboard components under `src/components/quantumsage/Lazy*` to reduce initial bundle size (e.g., `LazyChartDisplay`, `LazyTechnicalIndicatorsCard`).
+
+## Observability / Sentry
+
+- I added server and client Sentry config files (`sentry.server.config.js` and `sentry.client.config.js`). To enable Sentry in production, set the DSN in environment variables:
+
+```powershell
+setx SENTRY_DSN "https://<key>@sentry.io/<project>"
+setx NEXT_PUBLIC_SENTRY_DSN "https://<key>@sentry.io/<project>"
+```
+
+- A small server init helper is available at `src/lib/sentry.server.ts`. The client initializer is `src/components/SentryInit.tsx`.
+
+- I also added a lightweight AI metrics recorder at `src/lib/aiMetrics.ts` and a simple endpoint at `/api/ai-metrics` to inspect metrics locally.
+
+- The `/api/ai-metrics` endpoint is now protected using an API key. Set `AI_METRICS_API_KEY` in your environment, and call the endpoint with header `x-api-key: <your-key>`.
+- The endpoint also has a basic in-memory rate limiter to prevent accidental abuse. For production, secure this behind internal tooling or require authenticated access.
+
+## AI Robustness: caching & rate limiting
+
+- A small in-memory cache is available at `src/lib/aiCache.ts`. Flows will check the cache before calling the model and store responses with a default TTL of 5 minutes.
+- A global AI rate limiter protects the service from accidental overload; default limit is controlled by env `AI_GLOBAL_RATE_LIMIT` (requests per minute). When exceeded flows will throw an error.
+
+Notes: For production, replace the in-memory cache with Redis (or equivalent) and the in-memory rate limiter with a distributed limiter (Redis tokens, cloud rate-limiting, or API gateway policies).
+
+
+

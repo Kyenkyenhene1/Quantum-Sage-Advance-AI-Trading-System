@@ -1,0 +1,29 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-with-mock-executor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Start mock executor
+        run: npm run mock:executor &
+      - name: Wait for executor
+        run: npx wait-on http://localhost:4001
+      - name: Run unit tests
+        run: npm test -- --run
+        env:
+          ORDER_EXECUTOR_URL: http://localhost:4001
+          ORDER_EXECUTOR_API_KEY: testkey
+          SERVER_SIDE_API_KEY: test-server-key
